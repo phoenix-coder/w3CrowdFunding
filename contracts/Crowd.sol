@@ -20,8 +20,8 @@ contract CrowdFunding{
     
     struct Request {
         uint id;
-        bytes title;
-        bytes description;
+        string title;
+        string description;
         uint deadline;
         uint target;
         uint raisedAmount;
@@ -30,7 +30,7 @@ contract CrowdFunding{
     }
 
     mapping (uint => Request) public requests;
-    event showOndashboard (uint id, bytes title, bytes description, uint deadline, uint target, uint raisedAmount, bool approved, address receiver);
+    event showOndashboard (uint id, string title, string description, uint deadline, uint target, uint raisedAmount, bool approved, address receiver);
 
     constructor(){
         owner = msg.sender;
@@ -39,8 +39,8 @@ contract CrowdFunding{
     function register (string memory _title, string memory _description, uint _deadline, uint _target) public {
         Request memory newRequest = Request({
             id: rid,
-            title: bytes(_title),
-            description : bytes(_description),
+            title: _title,
+            description : _description,
             deadline : block.timestamp + (_deadline * 60),
             target : _target,
             approved : false,
@@ -89,5 +89,7 @@ contract CrowdFunding{
         crowdToken.transfer(msg.sender, tokenAmount);
         return crowdToken.balanceOf(msg.sender);
     }
+
+    
 
 }
